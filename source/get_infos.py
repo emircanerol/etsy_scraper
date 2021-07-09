@@ -4,14 +4,13 @@ from lxml import html
 import sys
 import mysql.connector
 
-print('sonunda')
+
 operation = sys.argv[1]
 
 if operation == "-a" and len(sys.argv) == 3:
 	URL = sys.argv[2]
-	# add_product(URL)
+	add_product(URL)
 	print('python', URL)
-	print('bişiler')
 
 
 def add_product(URL):
@@ -50,9 +49,31 @@ def add_product(URL):
 	mydb.commit()
 	print(mycursor.rowcount, "record inserted.")
 
+def status(p_id):
+	mydb = mysql.connector.connect(
+		host="localhost",
+		user="root",
+		password="root",
+		port='3307',
+		database='mysql'
+	)
+
+	mycursor = mydb.cursor()
+
+	mycursor.execute("SELECT * FROM products WHERE ID == p_id")
+	line = mycursor.fetchall()
+	print(line)
 
 
-# add_product("https://www.etsy.com/uk/listing/772695061/brass-or-silver-leaf-bookmark-set")
+
+
+
+
+
+
+
+
+
 
 
 
