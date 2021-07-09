@@ -14,6 +14,18 @@ def connect_db():
 	)
 	return mydb
 
+def print_(line):
+	try:
+		s = str()
+		for i in line:
+			if i != line[-1]:
+				s = s + str(i) + " | "
+			else: 
+				s = s + i
+		print(s)
+	except Exception as e:
+		print(e)
+
 def add_product(URL):
 	try:
 		response = get(URL)
@@ -23,6 +35,7 @@ def add_product(URL):
 
 	except:
 		print(f"Not a URL! {sys.version}")
+		print(URL)
 		sys.exit()
 		# if input is invalid exit the program
 
@@ -48,14 +61,17 @@ def add_product(URL):
 		text = tree.xpath(xpaths[i])[0].strip()
 		line.append(text)
 		# get desired values and append them to line
-
+	
 	sql = 'INSERT INTO products (ID, name, image, price) VALUES (%s, %s, %s, %s)'
 	mycursor.execute(sql, line)
 	mydb.commit()
 	# insert new line
-	print(mycursor.rowcount, "record inserted.")
-	print(line)
 
+	print_(line)
+
+	# print("\n", mycursor.rowcount, "record inserted.")
+	# print(" | ".join(line))
+	# print(line)
 def status(pid):
 	mydb = connect_db()
 	# connect to db
@@ -64,7 +80,7 @@ def status(pid):
 	pid = (pid,)
 	mycursor.execute(sql, pid)
 	line = mycursor.fetchall()
-	print(line)
+	print_(line)
 
 try:
 	operation = sys.argv[1]
@@ -83,13 +99,5 @@ elif operation == "-s" and len(sys.argv) == 3:
 
 else:
 	print("please try one of these statements:\npython get_infos.py -a [URL] with quotation marks\npython get_infos.py -s [ID]")
-
-
-
-
-
-
-
-
 
 
