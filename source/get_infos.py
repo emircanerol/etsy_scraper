@@ -12,7 +12,12 @@ if operation == "-a" and len(sys.argv) == 3:
 	add_product(URL)
 	print('python', URL)
 
+elif operation == "-s" and len(sys.argv) == 3:
+	p_id = sys.argv[2]
+	print(status(p_id))
 
+else:
+	print("please try one of these statements:\npython get_infos.py -a [URL]\npython get_infos.py -s [ID]")
 def add_product(URL):
 	try:
 		response = get(URL)
@@ -63,7 +68,6 @@ def status(p_id):
 	mycursor.execute("SELECT * FROM products WHERE ID == p_id")
 	line = mycursor.fetchall()
 	print(line)
-
 
 
 
