@@ -4,20 +4,6 @@ from lxml import html
 import sys
 import mysql.connector
 
-
-operation = sys.argv[1]
-
-if operation == "-a" and len(sys.argv) == 3:
-	URL = sys.argv[2]
-	add_product(URL)
-	print('python', URL)
-
-elif operation == "-s" and len(sys.argv) == 3:
-	p_id = sys.argv[2]
-	print(status(p_id))
-
-else:
-	print("please try one of these statements:\npython get_infos.py -a [URL]\npython get_infos.py -s [ID]")
 def add_product(URL):
 	try:
 		response = get(URL)
@@ -53,8 +39,9 @@ def add_product(URL):
 	mycursor.execute(sql, line)
 	mydb.commit()
 	print(mycursor.rowcount, "record inserted.")
+	print(line)
 
-def status(p_id):
+def status(pid):
 	mydb = mysql.connector.connect(
 		host="localhost",
 		user="root",
@@ -65,12 +52,24 @@ def status(p_id):
 
 	mycursor = mydb.cursor()
 
-	mycursor.execute("SELECT * FROM products WHERE ID == p_id")
+	mycursor.execute("SELECT * FROM products WHERE ID = '%pid%'")
 	line = mycursor.fetchall()
 	print(line)
 
 
+operation = sys.argv[1]
 
+
+if operation == "-a" and len(sys.argv) == 3:
+	URL = sys.argv[2]
+	add_product(URL)
+
+elif operation == "-s" and len(sys.argv) == 3:
+	p_id = sys.argv[2]
+	status(p_id)
+
+else:
+	print("please try one of these statements:\npython get_infos.py -a [URL]\npython get_infos.py -s [ID]")
 
 
 
