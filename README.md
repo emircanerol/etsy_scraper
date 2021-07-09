@@ -1,5 +1,7 @@
 # etsy_scraper
 
+here is the sql image: https://hub.docker.com/repository/registry-1.docker.io/emircanerol/etsy_scraper/tags?page=1&ordering=last_updated
+
 interface.html, get_infos.html, pass_link.php must be at same directory.
 
 You should set connect_db() in your computer.
