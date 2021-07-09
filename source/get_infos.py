@@ -51,21 +51,25 @@ def status(pid):
 	)
 
 	mycursor = mydb.cursor()
-
-	mycursor.execute("SELECT * FROM products WHERE ID = '%pid%'")
+	sql = "SELECT * FROM products WHERE ID = %s"
+	pid = (pid,)
+	mycursor.execute(sql, pid)
 	line = mycursor.fetchall()
 	print(line)
 
+try:
+	operation = sys.argv[1]
 
-operation = sys.argv[1]
-
-
+except:
+	print("please try one of these statements:\npython get_infos.py -a [URL]\npython get_infos.py -s [ID]")
+	sys.exit()
+	
 if operation == "-a" and len(sys.argv) == 3:
 	URL = sys.argv[2]
 	add_product(URL)
 
 elif operation == "-s" and len(sys.argv) == 3:
-	p_id = sys.argv[2]
+	p_id = int(sys.argv[2])
 	status(p_id)
 
 else:
