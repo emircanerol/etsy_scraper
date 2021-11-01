@@ -1,3 +1,4 @@
+#author: Emircan Erol
 # etsy_scraper
 
 Docker sql image: https://hub.docker.com/repository/registry-1.docker.io/emircanerol/etsy_scraper/tags?page=1&ordering=last_updated
